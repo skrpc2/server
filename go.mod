@@ -1,4 +1,4 @@
-module github.com/ryrpc/server
+module github.com/skrpc2/server
 
 go 1.13
 
