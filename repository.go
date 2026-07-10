@@ -72,9 +72,9 @@ func (r *Repository) Handler() HandlerFunc {
 
 // RegisterRoutes registers all method handlers on the given Hertz server.
 func (r *Repository) RegisterRoutes(h *server.Hertz) {
-	group := h.Group("/", r.preHandler())
+	//group := h.Group("/", r.preHandler())
 	for method, handler := range r.handlers {
-		group.POST(method, handler)
+		h.POST(method, handler)
 	}
 }
 
