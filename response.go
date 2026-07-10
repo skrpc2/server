@@ -3,25 +3,15 @@ package rysrv
 import (
 	"fmt"
 
+	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/fxamacker/cbor/v2"
 	"github.com/golang/protobuf/proto"
-	"github.com/valyala/fasthttp"
 )
 
 // SetError writes JSON-RPC response with error.
 //
 // It overwrites previous calls of SetResult and SetError.
-
-func SetError(fctx *fasthttp.RequestCtx, err error) {
-
-	/*
-		id := rCtx.UserValue("id")
-		if _, ok := id.(string); !ok {
-			fmt.Println("SetError id not found")
-			return
-		}
-	*/
-
+func SetError(c *app.RequestContext, err error) {
 	args := &Base{}
 	args.Err = err.Error()
 
@@ -30,11 +20,10 @@ func SetError(fctx *fasthttp.RequestCtx, err error) {
 		fmt.Println("SetError args.MarshalBinary = ", err.Error())
 		return
 	}
-	fctx.SetBody(b)
+	c.Response.SetBody(b)
 }
 
-func SetResult(fctx *fasthttp.RequestCtx, result interface{}) {
-
+func SetResult(c *app.RequestContext, result interface{}) {
 	args := &Base{}
 	args.Err = ""
 
@@ -56,6 +45,6 @@ func SetResult(fctx *fasthttp.RequestCtx, result interface{}) {
 		fmt.Println("SetResult args.MarshalBinary = ", err2.Error())
 		return
 	}
-	fctx.Response.Header.Set("Connection", "keep-alive")
-	fctx.SetBody(b2)
+	c.Response.Header.Set("Connection", "keep-alive")
+	c.Response.SetBody(b2)
 }
