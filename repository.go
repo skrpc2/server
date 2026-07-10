@@ -2,6 +2,7 @@ package rysrv
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/app/server"
@@ -74,6 +75,7 @@ func (r *Repository) Handler() HandlerFunc {
 func (r *Repository) RegisterRoutes(h *server.Hertz) {
 	//group := h.Group("/", r.preHandler())
 	for method, handler := range r.handlers {
+		fmt.Println("method = ", method)
 		h.POST(method, handler)
 	}
 }
