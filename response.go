@@ -40,11 +40,11 @@ func SetResult(c *app.RequestContext, result interface{}) {
 		args.Data = b1
 	}
 
-	b2, err2 := proto.Marshal(args)
+	payload, err2 := proto.Marshal(args)
 	if err2 != nil {
 		fmt.Println("SetResult args.MarshalBinary = ", err2.Error())
 		return
 	}
 	c.Response.Header.Set("Connection", "keep-alive")
-	c.Response.SetBody(b2)
+	c.Data(200, "application/protobuf", payload)
 }
